@@ -1,27 +1,26 @@
 package com.foundation.core.configuration;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@OpenAPIDefinition
 @Configuration
 public class OpenApiConfig {
-    // Todo: config properties
-    @Value("${author.fullname}")
-    private String authorFullName;
+
+    @Value("${author.fullName}")
+    private String fullName;
+
+    @Value("${author.email}")
+    private String email;
 
     @Bean
     public OpenAPI baseOpenAPI() {
-        Contact author = new Contact();
-        return new OpenAPI().components(new Components())
-                .info(new Info().title("Foundation - Core")
-                                .version("0.0.1")
-                                .description("OpenAPI Swagger"));
+        Contact author = new Contact().name(fullName).email(email);
+        return new OpenAPI().info(new Info().title("Foundation - Core")
+                            .version("0.0.1")
+                            .description("OpenAPI Swagger").contact(author));
     }
 }

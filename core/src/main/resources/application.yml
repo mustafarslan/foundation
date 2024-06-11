@@ -1,4 +1,7 @@
 spring.application.name: core
+springdoc:
+    swagger-ui:
+        use-root-path: true
 author:
-    fullname: Mustafa Arslan
-    email: mustafarslan35@gmail.com
+    fullName: 'Mustafa Arslan'
+    email: 'mustafarslan35@gmail.com'

@@ -19,7 +19,7 @@ public class GreetingsController {
     @Operation(summary = "Mandatory", description = "just doing what needs to be done")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully completed mandatory task"),
-            @ApiResponse(responseCode = "404", description = "I had one job but couldnt find it.")
+            @ApiResponse(responseCode = "404", description = "I had one job but couldn't find it.")
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
