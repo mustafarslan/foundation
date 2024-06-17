@@ -21,8 +21,8 @@ public class Greet extends BaseEntity {
     @Column(unique = true, nullable = false, updatable = false)
     private String identifier;
 
-    @Column(name = "GREET_NAME", unique = true)
-    private String name;
+    @Column(name = "GREET_MESSAGE", unique = true)
+    private String message;
 
     @PrePersist
     void prePersist() {

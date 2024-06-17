@@ -16,11 +16,22 @@ public class OpenApiConfig {
     @Value("${author.email}")
     private String email;
 
+    @Value("${app-info.title}")
+    private String title;
+
+    @Value("${app-info.version}")
+    private String version;
+
+    @Value("${app-info.description}")
+    private String description;
+
+
     @Bean
     public OpenAPI baseOpenAPI() {
         Contact author = new Contact().name(fullName).email(email);
-        return new OpenAPI().info(new Info().title("Foundation - Core")
-                            .version("0.0.1")
-                            .description("OpenAPI Swagger").contact(author));
+        return new OpenAPI().info(new Info().title(title)
+                            .version(version)
+                            .description(description)
+                            .contact(author));
     }
 }

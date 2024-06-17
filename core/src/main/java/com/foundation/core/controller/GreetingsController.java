@@ -1,10 +1,12 @@
 package com.foundation.core.controller;
 
 import com.foundation.core.dto.GreetingResponseDto;
+import com.foundation.core.service.GreetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Greetings", description = "Sample API for Foundation Core")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/greetings")
 @Profile("dev")
 public class GreetingsController {
+
+    private final GreetService greetService;
 
     @Operation(summary = "Mandatory", description = "just doing what needs to be done")
     @ApiResponses(value = {
@@ -26,7 +31,7 @@ public class GreetingsController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public GreetingResponseDto greetings() {
-        return GreetingResponseDto.builder().message("Hello World").build();
+        return greetService.greet();
     }
 
 }

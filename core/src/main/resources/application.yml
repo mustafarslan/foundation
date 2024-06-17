@@ -3,6 +3,12 @@ springdoc:
     swagger-ui:
         use-root-path: true
 
+app-info:
+    title: "Foundation - Core"
+    version: "0.0.1"
+    description: "OpenAPI Swagger"
+
+
 author:
     fullName: 'Mustafa Arslan'
     email: 'mustafarslan35@gmail.com'
@@ -11,11 +17,28 @@ spring:
     profiles:
         active: "dev"
     h2:
-        console.enabled: true
+        console:
+            enabled: true
+            path: /h2-console
+            settings:
+                trace: false
+                web-allow-others: false
+    sql:
+        init:
+            mode: always
+            platform: h2
+            data-locations: classpath:./db/sql/h2/data-h2.sql
+            schema-locations: classpath:./db/sql/h2/schema-h2.sql
+
     datasource:
-        url: jdbc:h2:file:./data/demo
+        url: jdbc:h2:file:./core/src/main/resources/db/data/demo
         username: sa
-        password: password
+        password: sa
         driverClassName: org.h2.Driver
     jpa:
+        show-sql: true
+        open-in-view: false
+        defer-datasource-initialization: true
         database-platform: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: none
