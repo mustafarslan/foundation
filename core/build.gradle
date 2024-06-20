@@ -39,6 +39,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     compileOnly 'io.lettuce:lettuce-core:6.3.2.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.3.0'
+    implementation 'org.springframework.kafka:spring-kafka:3.2.1'
 }
 
 tasks.named('test') {

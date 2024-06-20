@@ -48,3 +48,5 @@ spring:
             port: 6379
             password: ""
             ttl: 0
+    kafka:
+        bootstrap-servers: localhost:29092
