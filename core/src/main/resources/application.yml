@@ -50,3 +50,5 @@ spring:
             ttl: 0
     kafka:
         bootstrap-servers: localhost:29092
+    elasticsearch:
+      url: localhost:9200
