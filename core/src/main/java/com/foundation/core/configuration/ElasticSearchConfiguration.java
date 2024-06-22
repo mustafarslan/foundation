@@ -1,5 +1,7 @@
 package com.foundation.core.configuration;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfigurat
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "com.foundation.core.repository")
 @ComponentScan(basePackages = { "com.foundation.core.service" })
+@NoArgsConstructor
+@AllArgsConstructor
 public class ElasticSearchConfiguration extends ElasticsearchConfiguration {
 
     @Value("${spring.elasticsearch.url}")
@@ -17,6 +21,9 @@ public class ElasticSearchConfiguration extends ElasticsearchConfiguration {
 
     @Override
     public ClientConfiguration clientConfiguration() {
-        return ClientConfiguration.builder().connectedTo(elasticsearchUrl).build();
+        return ClientConfiguration.builder()
+                                  .connectedTo(elasticsearchUrl)
+                                  .withBasicAuth("elastic", "defaultpassword")
+                                  .build();
     }
 }
