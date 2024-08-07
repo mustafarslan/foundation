@@ -14,24 +14,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 @Tag(name = "Greetings", description = "Sample API for Foundation Core")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/greetings")
+@RequestMapping("/api/")
 @Profile("dev")
 public class GreetingsController {
 
     private final GreetService greetService;
 
-    @Operation(summary = "Mandatory", description = "just doing what needs to be done")
+    @Operation(summary = "Greeting - Normal", description = "just doing what needs to be done")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully completed mandatory task"),
             @ApiResponse(responseCode = "404", description = "I had one job but couldn't find it.")
     })
-    @GetMapping
+    @GetMapping(value = "v1/greetings")
     @ResponseStatus(HttpStatus.OK)
     public GreetingResponseDto greetings() {
         return greetService.greet();
+    }
+
+    @Operation(summary = "Greeting - Async", description = "just doing what needs to be done")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully completed mandatory task"),
+            @ApiResponse(responseCode = "404", description = "I had one job but couldn't find it.")
+    })
+    @GetMapping(value = "v1/greetingsAsync")
+    @ResponseStatus(HttpStatus.OK)
+    public CompletableFuture<GreetingResponseDto> greetingsAsync() throws ExecutionException, InterruptedException {
+        return greetService.greetAsync();
     }
 
 }

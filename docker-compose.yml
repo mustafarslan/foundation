@@ -125,6 +125,9 @@ services:
       - '6379:6379'
     volumes:
       - redis:/data
+  jmeter:
+    image: anasoid/jmeter
+    restart: unless-stopped
 volumes:
   certs:
     driver: local
