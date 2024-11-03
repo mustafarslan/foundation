@@ -6,9 +6,9 @@ springdoc:
         use-root-path: true
 
 app-info:
-    title: "Foundation - Core"
+    title: "Broker Firm Challenge"
     version: "0.0.1"
-    description: "OpenAPI Swagger"
+    description: "Java Backend Developer Case"
 
 
 author:
@@ -20,7 +20,7 @@ spring:
         name: core
     devtools:
         livereload:
-            enabled: false
+            enabled: true
     profiles:
         active: "dev"
     h2:
@@ -45,7 +45,7 @@ spring:
     jpa:
         show-sql: true
         open-in-view: false
-        defer-datasource-initialization: true
+        defer-datasource-initialization: false
         database-platform: org.hibernate.dialect.H2Dialect
         hibernate:
             ddl-auto: none
@@ -59,3 +59,7 @@ spring:
         bootstrap-servers: localhost:29092
     elasticsearch:
       url: localhost:9200
+
+jwt:
+    secret: testSecretKeytestSecretKeytestSecretKeytestSecretKey
+    expiration: 86400000 # 24 hours in milliseconds
