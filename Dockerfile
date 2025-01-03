@@ -1,5 +1,15 @@
 FROM openjdk:21-jdk-slim
 
+ENV SPRING_PROFILES_ACTIVE=docker
+ENV SPRING_DATASOURCE_URL=jdbc:h2:file:./core/src/main/resources/db/data/demo
+ENV SPRING_DATASOURCE_DRIVERCLASSNAME=org.h2.Driver
+ENV SPRING_DATASOURCE_USERNAME=sa
+ENV SPRING_DATASOURCE_PASSWORD=sa
+ENV SPRING_H2_CONSOLE_ENABLED=true
+ENV SPRING_H2_CONSOLE_PATH=/h2-console 
+ENV JWT_SECRET=testSecretKeytestSecretKeytestSecretKeytestSecretKey
+ENV JWT_EXPIRATION=86400000
+
 # Set working directory
 WORKDIR /app
 

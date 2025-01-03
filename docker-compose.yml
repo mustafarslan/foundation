@@ -1,27 +1,29 @@
-version: '3.8'
-
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      # H2 Database configurations
-      - SPRING_DATASOURCE_URL=jdbc:h2:file:./core/src/main/resources/db/data/demo
-      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.h2.Driver
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=sa
-      - SPRING_H2_CONSOLE_ENABLED=true
-      - SPRING_H2_CONSOLE_PATH=/h2-console
-      # JWT configurations
-      - JWT_SECRET=testSecretKeytestSecretKeytestSecretKeytestSecretKey
-      - JWT_EXPIRATION=86400000
-    networks:
-      - foundation-network
+  prometheus:
+      image: prom/prometheus:latest
+      container_name: prometheus
+      restart: unless-stopped
+      volumes:
+        - ./data/prometheus/config:/etc/prometheus/
+      command:
+        - "--config.file=/etc/prometheus/prometheus.yaml"
+      ports:
+        - "0.0.0.0:9090:9090"
 
-networks:
-  foundation-network:
-    driver: bridge
+  grafana:
+    image: grafana/grafana-oss:latest
+    pull_policy: always
+    container_name: grafana
+    restart: unless-stopped
+    user: root
+    ports:
+      - "0.0.0.0:3000:3000" # access grafana url
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_DOMAIN=localhost
+      # Enabled for logging
+      - GF_LOG_MODE=console file
+      - GF_LOG_FILTERS=alerting.notifier.slack:debug alertmanager:debug ngalert:debug

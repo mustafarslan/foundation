@@ -1,0 +1,42 @@
+# my global config
+global:
+  scrape_interval:     120s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 120s # By default, scrape targets every 15 seconds.
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+    - targets: ['localhost:9090']
+  
+  - job_name: 'Spring Boot Application Prometheus Metrics '
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 2s
+    static_configs:
+      - targets: ['host.docker.internal:8081']
+        labels:
+          application: "My Spring Boot Application"
+  - job_name: blackbox
+    metrics_path: /probe
+    scrape_interval: 2s
+    params:
+      module: [http_get_2xx]
+    dns_sd_configs:
+      - names:
+            - host.docker.internal
+        type: A
+        port: 8081
+    relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+          replacement: http://$1/actuator/health  # Make probe URL be like https://1.2.3.4:443/
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: host.docker.internal:9115 # Blackbox exporter.
